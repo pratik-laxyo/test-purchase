@@ -41,6 +41,36 @@
     </div>
   </li>
 
+  <li class="nav-item">
+    <a class="nav-link" href="{{ '/um' }}">
+      <i class="fas fa-fw fa-balance-scale"></i>
+      <span>Units of Measurement</span></a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{ 'category' }}">
+      <i class="fas fa-fw fa-tags"></i>
+      <span>Items Category</span></a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{ 'location' }}">
+      <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i> 
+      <span>Location</span></a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+      <i class="fas fa-fw fa-shopping-cart"></i>
+      <span>Items</span>
+    </a>
+    <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="{{ route('item.create') }}">Create Item</a>
+        <a class="collapse-item" href="{{ route('item.index') }}">Items Listing</a>
+      </div>
+    </div>
+  </li>
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">

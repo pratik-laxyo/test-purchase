@@ -61,7 +61,7 @@ class VendorController extends Controller
      */
     public function show(vendor $vendor)
     {
-        //
+        return view('vendor.show',compact('vendor'));
     }
 
     /**

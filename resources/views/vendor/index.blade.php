@@ -33,6 +33,7 @@
                 <td>{{ $row->address }}</td>
                 <td>
                   <form action="{{ route('vendor.destroy',$row->id) }}" method="POST">
+                    <a class="btn btn-success" href="{{ route('vendor.show',$row->id) }}">Show</a>
                     <a class="btn btn-primary" href="{{ route('vendor.edit',$row->id) }}">Edit</a>
                     @csrf
                     @method('DELETE')

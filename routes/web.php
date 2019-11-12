@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('vendor', 'VendorController');
+Route::resource('/um', 'UnitofmeasurementController');
+Route::resource('/category', 'ItemCategoryController');
+Route::resource('/location', 'LocationController');
+Route::resource('item', 'ItemController');
