@@ -49,7 +49,7 @@ class ItemController extends Controller
             'item_number' => 'required',
             'unit_id' => 'required',
             'category_id' => 'required',
-            'location_id' => 'required',
+            'title' => 'required|unique:items',
             'description' => 'required'
         ]);
   
@@ -98,7 +98,7 @@ class ItemController extends Controller
         $request->validate([
             'unit_id' => 'required',
             'category_id' => 'required',
-            'location_id' => 'required',
+            'title' => 'required',
             'description' => 'required'
         ]);
   

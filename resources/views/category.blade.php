@@ -3,6 +3,8 @@
 @section('content')
 
 <div class="container-fluid">
+  <a href="{{ '/home' }}" class="main-title-w3layouts mb-2 float-right"><i class="fa fa-arrow-left"></i>  Back</a>
+  <h5 class="main-title-w3layouts mb-2">Item Categories</h5>
   <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -128,7 +130,7 @@ $(document).ready(function() {
 	        url: '/category',
 	        data: $('#addForm').serialize(),
 	        success: function(data) {
-            	alert('Units added');
+            	alert(data);
             	location.reload();
 	        },
 	    });

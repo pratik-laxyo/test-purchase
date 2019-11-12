@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LocationController extends Controller
 {
@@ -36,9 +37,20 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new location;
-        $data->location = $request->input('location');
-        $data->save ();
+        $validation = Validator::make($request->all(), [
+            'location' => 'unique:locations'
+        ]);
+        if ($validation->fails())
+        {
+            return "The location has already been taken";
+        }
+        else
+        {
+            $data = new location;
+            $data->location = $request->input('location');
+            $data->save ();
+            return 'Location added';
+        }
     }
 
     /**

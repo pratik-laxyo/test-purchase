@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\unitofmeasurement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class UnitofmeasurementController extends Controller
 {
@@ -41,9 +43,20 @@ class UnitofmeasurementController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new unitofmeasurement;
-        $data->quantity = $request->input('unit');
-        $data->save ();
+        $validation = Validator::make($request->all(), [
+            'quantity' => 'unique:unitofmeasurements'
+        ]);
+        if ($validation->fails())
+        {
+            return "The quantity has already been taken";
+        }
+        else
+        {
+            $data = new unitofmeasurement;
+            $data->quantity = $request->input('quantity');
+            $data->save ();
+            return 'Units added';
+        }
     }
 
     /**
@@ -77,7 +90,7 @@ class UnitofmeasurementController extends Controller
      */
     public function update(Request $request, unitofmeasurement $unitofmeasurement)
     {
-        unitofmeasurement::where('id', $request->input('id'))->update(['quantity'=> $request->input('unit')]);
+        unitofmeasurement::where('id', $request->input('id'))->update(['quantity'=> $request->input('quantity')]);
     }
 
     /**

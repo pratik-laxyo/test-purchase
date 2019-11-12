@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\item_category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ItemCategoryController extends Controller
 {
@@ -41,9 +42,20 @@ class ItemCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new item_category;
-        $data->category_name = $request->input('category_name');
-        $data->save ();
+        $validation = Validator::make($request->all(), [
+            'category_name' => 'unique:item_categories'
+        ]);
+        if ($validation->fails())
+        {
+            return "The Category Name has already been taken";
+        }
+        else
+        {
+            $data = new item_category;
+            $data->category_name = $request->input('category_name');
+            $data->save ();
+            return 'Category added';
+        }
     }
 
     /**

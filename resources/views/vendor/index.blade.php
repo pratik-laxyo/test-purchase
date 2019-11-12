@@ -3,6 +3,8 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
+  <a href="{{ '/home' }}" class="main-title-w3layouts mb-2 float-right"><i class="fa fa-arrow-left"></i>  Back</a>
+  <h5 class="main-title-w3layouts mb-2">Vendors Listing</h5>
   <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">

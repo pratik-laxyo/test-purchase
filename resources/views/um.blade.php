@@ -3,6 +3,8 @@
 @section('content')
 
 <div class="container-fluid">
+  <a href="{{ '/home' }}" class="main-title-w3layouts mb-2 float-right"><i class="fa fa-arrow-left"></i>  Back</a>
+  <h5 class="main-title-w3layouts mb-2">Units of Measurement</h5>
   <div class="card shadow mb-4">
     <div class="card-body">
       <div class="table-responsive">
@@ -63,7 +65,7 @@
 		            <div class="row">
 		                <div class="form-group col-md-12">
 		                    <label>Units</label>
-		                    <input type="name" class="form-control" placeholder="units" id="unit" name="unit">
+		                    <input type="name" class="form-control" placeholder="units" id="unit" name="quantity">
 		                </div>
 		            </div>
 		            <button type="submit" name="submit" id="addUnit" class="btn btn-primary float-right">Submit</button>
@@ -90,7 +92,7 @@
             <div class="row">
               <div class="form-group col-md-12">
                 <label>Units</label>
-                <input type="text" class="form-control" value="{{ $row->quantity }}" id="unit" name="unit">
+                <input type="text" class="form-control" value="{{ $row->quantity }}" id="unit" name="quantity">
                 <input type="hidden" class="form-control" value="{{ $row->id }}" id="id" name="id">
               </div>
             </div>
@@ -128,8 +130,8 @@ $(document).ready(function() {
 	        url: '/um',
 	        data: $('#addForm').serialize(),
 	        success: function(data) {
-            	alert('Units added');
-            	location.reload();
+            alert(data);
+            location.reload();
 	        },
 	    });
 	});

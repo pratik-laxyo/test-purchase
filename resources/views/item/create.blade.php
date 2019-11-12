@@ -5,6 +5,8 @@
     $s = substr(str_shuffle(str_repeat("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 5)), 0, 10);
 ?>  
 <div class="container-fluid">
+    <a href="{{ '/item' }}" class="main-title-w3layouts mb-2 float-right"><i class="fa fa-arrow-left"></i>  Back</a>
+    <h5 class="main-title-w3layouts mb-2">Add Item</h5>
     <div class="card shadow mb-4">
         <div class="card-body">
             @if ($errors->any())
@@ -26,13 +28,8 @@
                         <input type="text" class="form-control" value="{{ $s }}" name="item_number" readonly="">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Select Unit</label>
-                        <select name="unit_id" class="form-control">
-                            <option disabled="" selected="">Select Units</option>
-                            @foreach ($units as $unit)
-                                <option value="{{ $unit->id }}">{{ $unit->quantity }}</option>
-                            @endforeach
-                        </select>
+                        <label>Add Title</label>
+                        <input type="text" class="form-control" placeholder="Add Title" name="title">
                     </div>
                 </div>
                 <div class="row">
@@ -46,11 +43,11 @@
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Select Location</label>
-                        <select name="location_id" class="form-control">
-                            <option disabled="" selected="">Select Location</option>
-                            @foreach ($location as $locations)
-                                <option value="{{ $locations->id }}">{{ $locations->location }}</option>
+                        <label>Select Unit</label>
+                        <select name="unit_id" class="form-control">
+                            <option disabled="" selected="">Select Units</option>
+                            @foreach ($units as $unit)
+                                <option value="{{ $unit->id }}">{{ $unit->quantity }}</option>
                             @endforeach
                         </select>
                     </div>

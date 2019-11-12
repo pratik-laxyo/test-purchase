@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
+    <a href="{{ '/vendor' }}" class="main-title-w3layouts mb-2 float-right"><i class="fa fa-arrow-left"></i>  Back</a>
+    <h5 class="main-title-w3layouts mb-2">Add Vendor</h5>
     <div class="card shadow mb-4">
         <div class="card-body">
             @if ($errors->any())

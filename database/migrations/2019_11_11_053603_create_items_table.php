@@ -17,9 +17,9 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('item_number');
             $table->text('description');
-            $table->integer('unit_id');
+            $table->string('title');
             $table->integer('category_id');
-            $table->integer('location_id');
+            $table->integer('unit_id');
             $table->timestamps();
         });
     }

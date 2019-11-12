@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="card shadow mb-4">
+  <a href="{{ '/item' }}" class="main-title-w3layouts mb-2 float-right"><i class="fa fa-arrow-left"></i>  Back</a>
+  <h5 class="main-title-w3layouts mb-2">Edit Item</h5>
+    <div class="card shadow mt-3">
         <div class="card-body">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -24,13 +26,8 @@
                         <input type="text" class="form-control" value="{{ $item->item_number }}" readonly="">
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Select Unit</label>
-                        <select name="unit_id" class="form-control">
-                            <option disabled="" selected="">Select Units</option>
-                            @foreach ($units as $unit)
-                                <option value="{{ $unit->id }}" @if($unit->id == $item->unit_id) selected @endif>{{ $unit->quantity }}</option>
-                            @endforeach
-                        </select>
+                        <label>Title</label>
+                        <input type="text" class="form-control" value="{{ $item->title }}">
                     </div>
                 </div>
                 <div class="row">
@@ -44,11 +41,11 @@
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Select Location</label>
-                        <select name="location_id" class="form-control">
-                            <option disabled="" selected="">Select Location</option>
-                            @foreach ($location as $locations)
-                                <option value="{{ $locations->id }}" @if($locations->id == $item->location_id) selected @endif>{{ $locations->location }}</option>
+                        <label>Select Unit</label>
+                        <select name="unit_id" class="form-control">
+                            <option disabled="" selected="">Select Units</option>
+                            @foreach ($units as $unit)
+                                <option value="{{ $unit->id }}" @if($unit->id == $item->unit_id) selected @endif>{{ $unit->quantity }}</option>
                             @endforeach
                         </select>
                     </div>

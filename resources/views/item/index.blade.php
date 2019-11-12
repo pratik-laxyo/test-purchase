@@ -3,7 +3,9 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-  <div class="card shadow mb-4">
+  <a href="{{ '/home' }}" class="main-title-w3layouts mb-2 float-right"><i class="fa fa-arrow-left"></i>  Back</a>
+  <h5 class="main-title-w3layouts mb-2">Item Listing</h5>
+  <div class="card shadow mt-3">
     <div class="card-body">
       <div class="table-responsive">
         @if ($message = Session::get('success'))
@@ -16,9 +18,9 @@
             <tr>
               <th>S.No</th>
               <th>Item Number</th>
-              <th>Unit</th>
+              <th>Title</th>
               <th>Category</th>
-              <th>Location</th>
+              <th>Unit</th>
               <th>Description</th>
               <th>Action</th>
             </tr>
@@ -29,19 +31,15 @@
               <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $row->item_number }}</td>
-                @foreach ($units as $unit)
-                    @if ($row->unit_id == $unit->id)
-                        <td>{{ $unit->quantity }}</td>
-                    @endif
-                @endforeach
+                <td>{{ $row->title }}</td>
                 @foreach ($category as $categorys)
                     @if ($row->category_id == $categorys->id)
                         <td>{{ $categorys->category_name }}</td>
                     @endif
                 @endforeach
-                @foreach ($location as $locations)
-                    @if ($row->location_id == $locations->id)
-                        <td>{{ $locations->location }}</td>
+                @foreach ($units as $unit)
+                    @if ($row->unit_id == $unit->id)
+                        <td>{{ $unit->quantity }}</td>
                     @endif
                 @endforeach
                 <td>
