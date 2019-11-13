@@ -27,7 +27,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Title</label>
-                        <input type="text" class="form-control" value="{{ $item->title }}">
+                        <input type="text" class="form-control" name="title" value="{{ $item->title }}">
                     </div>
                 </div>
                 <div class="row">
