@@ -20,7 +20,8 @@
           <thead>
             <tr>
               <th>S.No</th>
-              <th>Units</th>
+              <th>Name</th>
+              <th>Description</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -29,7 +30,8 @@
               @foreach ($um as $row)
               <tr>
                 <td>{{ ++$i }}</td>
-                <td>{{ $row->quantity }}</td>
+                <td>{{ $row->name }}</td>
+                <td>{{ $row->description }}</td>
                 <td>
                   <a class="btn btn-primary" data-toggle="modal" data-id="{{ $row->id }}" data-target="#myModal{{ $row->id }}">Edit</a>
 
@@ -64,9 +66,13 @@
 		            @csrf
 		            <div class="row">
 		                <div class="form-group col-md-12">
-		                    <label>Units</label>
-		                    <input type="name" class="form-control" placeholder="units" id="unit" name="quantity">
+		                    <label>Name</label>
+		                    <input type="text" class="form-control" placeholder="Unit Name" id="name" name="name">
 		                </div>
+                    <div class="form-group col-md-12">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="3" placeholder="Unit Description" id="description" name="description"></textarea>
+                    </div>
 		            </div>
 		            <button type="submit" name="submit" id="addUnit" class="btn btn-primary float-right">Submit</button>
 		        </form>
@@ -91,9 +97,13 @@
             @method('PUT')
             <div class="row">
               <div class="form-group col-md-12">
-                <label>Units</label>
-                <input type="text" class="form-control" value="{{ $row->quantity }}" id="unit" name="quantity">
+                <label>Name</label>
+                <input type="text" class="form-control" value="{{ $row->name }}" id="name" name="name">
                 <input type="hidden" class="form-control" value="{{ $row->id }}" id="id" name="id">
+              </div>
+              <div class="form-group col-md-12">
+                  <label>Description</label>
+                  <textarea class="form-control" rows="3" id="description" name="description">{{ $row->description }}</textarea>
               </div>
             </div>
             <button type="submit" name="submit" id="updateUnit" class="btn btn-primary float-right">Update</button>

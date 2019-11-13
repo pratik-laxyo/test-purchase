@@ -43,7 +43,8 @@ class ItemCategoryController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'category_name' => 'unique:item_categories'
+            'name' => 'unique:item_categories',
+            'description' => ''
         ]);
         if ($validation->fails())
         {
@@ -52,7 +53,8 @@ class ItemCategoryController extends Controller
         else
         {
             $data = new item_category;
-            $data->category_name = $request->input('category_name');
+            $data->name = $request->input('name');
+            $data->description = $request->input('description');
             $data->save ();
             return 'Category added';
         }
@@ -89,7 +91,7 @@ class ItemCategoryController extends Controller
      */
     public function update(Request $request, item_category $item_category)
     {
-        item_category::where('id', $request->input('id'))->update(['category_name'=> $request->input('category_name')]);
+        item_category::where('id', $request->input('id'))->update(['name'=> $request->input('name'), 'description' => $request->input('description')]);
     }
 
     /**

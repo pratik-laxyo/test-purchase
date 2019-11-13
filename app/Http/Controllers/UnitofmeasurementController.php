@@ -44,16 +44,18 @@ class UnitofmeasurementController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'quantity' => 'unique:unitofmeasurements'
+            'name' => 'unique:unitofmeasurements',
+            'description' => ''
         ]);
         if ($validation->fails())
         {
-            return "The quantity has already been taken";
+            return "The name has already been taken";
         }
         else
         {
             $data = new unitofmeasurement;
-            $data->quantity = $request->input('quantity');
+            $data->name = $request->input('name');
+            $data->description = $request->input('description');
             $data->save ();
             return 'Units added';
         }
@@ -90,7 +92,7 @@ class UnitofmeasurementController extends Controller
      */
     public function update(Request $request, unitofmeasurement $unitofmeasurement)
     {
-        unitofmeasurement::where('id', $request->input('id'))->update(['quantity'=> $request->input('quantity')]);
+        unitofmeasurement::where('id', $request->input('id'))->update(['name'=> $request->input('name'), 'description' => $request->input('description')]);
     }
 
     /**

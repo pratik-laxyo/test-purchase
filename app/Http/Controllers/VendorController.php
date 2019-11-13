@@ -43,8 +43,8 @@ class VendorController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'mobile' => 'required|numeric',
+            'email' => '',
+            'mobile' => 'required|numeric|unique:vendors',
             'address' => 'required'
         ]);
   
@@ -86,7 +86,7 @@ class VendorController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'email',
+            'email' => '',
             'mobile' => 'required|numeric',
             'address' => 'required'
         ]);

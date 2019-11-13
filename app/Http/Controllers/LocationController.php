@@ -38,16 +38,18 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'location' => 'unique:locations'
+            'name' => 'unique:locations',
+            'description' => ''
         ]);
         if ($validation->fails())
         {
-            return "The location has already been taken";
+            return "The location name has already been taken";
         }
         else
         {
             $data = new location;
-            $data->location = $request->input('location');
+            $data->name = $request->input('name');
+            $data->description = $request->input('description');
             $data->save ();
             return 'Location added';
         }
@@ -84,7 +86,7 @@ class LocationController extends Controller
      */
     public function update(Request $request, location $location)
     {
-        location::where('id', $request->input('id'))->update(['location'=> $request->input('location')]);
+        location::where('id', $request->input('id'))->update(['name'=> $request->input('name'), 'description' => $request->input('description')]);
     }
 
     /**
