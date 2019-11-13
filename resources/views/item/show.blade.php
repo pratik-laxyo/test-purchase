@@ -22,7 +22,7 @@
                         <label>Category</label>
                         @foreach ($category as $categorys)
                             @if($item->category_id == $categorys->id)
-                                <input type="text" class="form-control" value="{{ $categorys->category_name }}" readonly="">
+                                <input type="text" class="form-control" value="{{ $categorys->name }}" readonly="">
                             @endif
                         @endforeach
                     </div>
@@ -30,7 +30,7 @@
                         <label>Unit</label>
                         @foreach ($units as $unit)
                             @if($item->unit_id == $unit->id)
-                                <input type="text" class="form-control" value="{{ $unit->quantity }}" readonly="">
+                                <input type="text" class="form-control" value="{{ $unit->name }}" readonly="">
                             @endif
                         @endforeach
                     </div>

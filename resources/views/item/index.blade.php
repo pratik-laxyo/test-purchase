@@ -34,12 +34,12 @@
                 <td>{{ $row->title }}</td>
                 @foreach ($category as $categorys)
                     @if ($row->category_id == $categorys->id)
-                        <td>{{ $categorys->category_name }}</td>
+                        <td>{{ $categorys->name }}</td>
                     @endif
                 @endforeach
                 @foreach ($units as $unit)
                     @if ($row->unit_id == $unit->id)
-                        <td>{{ $unit->quantity }}</td>
+                        <td>{{ $unit->name }}</td>
                     @endif
                 @endforeach
                 <td>

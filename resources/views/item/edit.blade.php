@@ -36,7 +36,7 @@
                         <select name="category_id" class="form-control">
                             <option disabled="" selected="">Select Category</option>
                             @foreach ($category as $categorys)
-                                <option value="{{ $categorys->id }}" @if($categorys->id == $item->category_id) selected @endif>{{ $categorys->category_name }}</option>
+                                <option value="{{ $categorys->id }}" @if($categorys->id == $item->category_id) selected @endif>{{ $categorys->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -45,7 +45,7 @@
                         <select name="unit_id" class="form-control">
                             <option disabled="" selected="">Select Units</option>
                             @foreach ($units as $unit)
-                                <option value="{{ $unit->id }}" @if($unit->id == $item->unit_id) selected @endif>{{ $unit->quantity }}</option>
+                                <option value="{{ $unit->id }}" @if($unit->id == $item->unit_id) selected @endif>{{ $unit->name }}</option>
                             @endforeach
                         </select>
                     </div>
