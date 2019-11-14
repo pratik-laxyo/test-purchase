@@ -32,16 +32,20 @@
                 <td>{{ ++$i }}</td>
                 <td>{{ $row->item_number }}</td>
                 <td>{{ $row->title }}</td>
-                @foreach ($category as $categorys)
-                    @if ($row->category_id == $categorys->id)
-                        <td>{{ $categorys->name }}</td>
-                    @endif
-                @endforeach
-                @foreach ($units as $unit)
-                    @if ($row->unit_id == $unit->id)
-                        <td>{{ $unit->name }}</td>
-                    @endif
-                @endforeach
+                <td>
+                  @foreach ($category as $categorys)
+                      @if ($row->category_id == $categorys->id)
+                        {{ $categorys->name }}
+                      @endif
+                  @endforeach
+                </td>
+                <td>
+                  @foreach ($units as $unit)
+                      @if ($row->unit_id == $unit->id)
+                        {{ $unit->name }}
+                      @endif
+                  @endforeach
+                </td>
                 <td>
                   @if(strlen($row->description) >= 200)
                     {{ substr($row->description,0,200).'..... ' }} <b>Read More</b>
