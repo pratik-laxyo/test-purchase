@@ -19,17 +19,12 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        if(!empty($request)){
-            print_r(request()->post()); 
-        }
-            $items = item::latest()->paginate(10);
-            $units = unitofmeasurement::get();
-            $category = item_category::get();
-            $location = location::get();
-            $brand = Brand::get();
-            $department = Department::get();
-            return view('item.index',compact('items','units','category','location','brand', 'department'))->with('i', (request()->input('page', 1) - 1) * 10);
-        
+  
+      $category = item_category::get();     
+      $department = Department::get();
+      $items =item::with(['brand_name','department_name','category','unit'])->get(); 
+
+      return view('item.index',compact('items','category','department'));
     }
 
     /**
@@ -135,7 +130,17 @@ class ItemController extends Controller
 
     public function filter(Request $request)
     {
-        print_r(request()->post()); die;
-        //$request->input('name');
+      $category = $request->category;
+      $dept = $request->department;
+      if(!empty($category)){
+      	$items =item::with(['brand_name','department_name','category','unit'])->where('category_id', $category)->get(); 
+      }
+      if(!empty($dept)){
+      	$items =item::with(['brand_name','department_name','category','unit'])->where('department', $dept)->get(); 
+      }
+      if(!empty($dept) && !empty($category)){
+      	$items =item::with(['brand_name','department_name','category','unit'])->where('category_id', $category)->where('department', $dept)->get(); 
+      }
+			return view('item.table',compact('items'));
     }
 }
