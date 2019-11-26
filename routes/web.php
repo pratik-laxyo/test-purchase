@@ -24,3 +24,6 @@ Route::resource('/um', 'UnitofmeasurementController');
 Route::resource('/category', 'ItemCategoryController');
 Route::resource('/location', 'LocationController');
 Route::resource('item', 'ItemController');
+Route::POST('filter', 'ItemController@filter')->name('filter');
+Route::resource('/department', 'DepartmentController');
+Route::resource('/brand', 'BrandController');

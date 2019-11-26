@@ -45,7 +45,11 @@ class VendorController extends Controller
             'name' => 'required',
             'email' => '',
             'mobile' => 'required|numeric|unique:vendors',
-            'address' => 'required'
+            'address' => 'required',
+            'alt_number' => 'numeric',
+            'reg_v_number' => 'required',
+            'firm_name' => 'required',
+            'gst_number' => 'required|unique:vendors'
         ]);
   
         Vendor::create($request->all());
@@ -88,7 +92,11 @@ class VendorController extends Controller
             'name' => 'required',
             'email' => '',
             'mobile' => 'required|numeric',
-            'address' => 'required'
+            'address' => 'required',
+            'alt_number' => 'numeric',
+            'reg_v_number' => 'required',
+            'firm_name' => 'required',
+            'gst_number' => 'required'
         ]);
   
         $vendor->update($request->all());

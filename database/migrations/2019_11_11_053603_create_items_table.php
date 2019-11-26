@@ -18,6 +18,8 @@ class CreateItemsTable extends Migration
             $table->string('item_number');
             $table->text('description');
             $table->string('title');
+            $table->string('brand');
+            $table->string('department');
             $table->integer('category_id');
             $table->integer('unit_id');
             $table->timestamps();

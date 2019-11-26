@@ -40,6 +40,26 @@
                         <input type="address" class="form-control" value="{{ $vendor->address }}" name="address">
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Registered Vendor No.</label>
+                        <input type="text" class="form-control" value="{{ $vendor->reg_v_number }}" name="reg_v_number">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Firm name</label>
+                        <input type="text" class="form-control" value="{{ $vendor->firm_name }}" name="firm_name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>GST No.</label>
+                        <input type="text" class="form-control" value="{{ $vendor->gst_number }}" name="gst_number">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Alternate Number</label>
+                        <input type="number" class="form-control" value="{{ $vendor->alt_number }}" name="alt_number">
+                    </div>
+                </div>
                 <button type="submit" name="submit" class="btn btn-primary error-w3l-btn mt-sm-5 mt-3 px-4">Submit</button>
             </form>
         </div>

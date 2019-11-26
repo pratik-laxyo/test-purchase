@@ -34,6 +34,26 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
+                        <label>Select Brand</label>
+                        <select name="brand" class="form-control">
+                            <option disabled="" selected="">Select Brand</option>
+                            @foreach ($brand as $brands)
+                                <option value="{{ $brands->id }}">{{ $brands->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Select Department</label>
+                        <select name="department" class="form-control">
+                            <option disabled="" selected="">Select Department</option>
+                            @foreach ($department as $departments)
+                                <option value="{{ $departments->id }}">{{ $departments->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
                         <label>Select Category</label>
                         <select name="category_id" class="form-control">
                             <option disabled="" selected="">Select Category</option>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
+use App\Brand;
 use App\item;
 use App\unitofmeasurement;
 use App\item_category;
@@ -15,13 +17,19 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = item::latest()->paginate(10);
-        $units = unitofmeasurement::get();
-        $category = item_category::get();
-        $location = location::get();
-        return view('item.index',compact('items','units','category','location'))->with('i', (request()->input('page', 1) - 1) * 10);
+        if(!empty($request)){
+            print_r(request()->post()); 
+        }
+            $items = item::latest()->paginate(10);
+            $units = unitofmeasurement::get();
+            $category = item_category::get();
+            $location = location::get();
+            $brand = Brand::get();
+            $department = Department::get();
+            return view('item.index',compact('items','units','category','location','brand', 'department'))->with('i', (request()->input('page', 1) - 1) * 10);
+        
     }
 
     /**
@@ -34,7 +42,9 @@ class ItemController extends Controller
         $units = unitofmeasurement::get();
         $category = item_category::get();
         $location = location::get();
-        return view('item.create',compact('units','category','location'));
+        $brand = Brand::get();
+        $department = Department::get();
+        return view('item.create',compact('units','category','location','brand', 'department'));
     }
 
     /**
@@ -69,7 +79,9 @@ class ItemController extends Controller
         $units = unitofmeasurement::get();
         $category = item_category::get();
         $location = location::get();
-        return view('item.show',compact('item','units','category','location'));
+        $brand = Brand::get();
+        $department = Department::get();
+        return view('item.show',compact('item','units','category','location','brand','department'));
     }
 
     /**
@@ -83,7 +95,9 @@ class ItemController extends Controller
         $units = unitofmeasurement::get();
         $category = item_category::get();
         $location = location::get();
-        return view('item.edit',compact('item','units','category','location'));
+        $brand = Brand::get();
+        $department = Department::get();
+        return view('item.edit',compact('item','units','category','location','brand','department'));
     }
 
     /**
@@ -117,5 +131,11 @@ class ItemController extends Controller
     {
         $item->delete();
         return redirect()->route('item.index')->with('success','Item deleted successfully');
+    }
+
+    public function filter(Request $request)
+    {
+        print_r(request()->post()); die;
+        //$request->input('name');
     }
 }

@@ -21,8 +21,18 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-6">
+                        <label>Registered Vendor Number</label>
+                        <input type="text" class="form-control" placeholder="Registered number" name="reg_v_number">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Firm Name</label>
+                        <input type="text" class="form-control" placeholder="Firm name...." name="firm_name">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
                         <label>Vendor Name</label>
-                        <input type="name" class="form-control" placeholder="Name" name="name">
+                        <input type="text" class="form-control" placeholder="Name" name="name">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Email</label>
@@ -32,11 +42,23 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Mobile No.</label>
-                        <input type="mobile" class="form-control" placeholder="Mobile Number" name="mobile">
+                        <input type="number" class="form-control" placeholder="Mobile Number" name="mobile">
                     </div>
                     <div class="form-group col-md-6">
+                        <label>Altername Number</label>
+                        <input type="number" class="form-control" placeholder="alternate number" name="alt_number">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>GST No.</label>
+                        <input type="text" class="form-control" placeholder="GST Number" name="gst_number">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
                         <label>Address</label>
-                        <input type="address" class="form-control" placeholder="Address" name="address">
+                        <textarea name="address" class="form-control" rows="5" placeholder="Address"></textarea>
                     </div>
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary error-w3l-btn mt-sm-5 mt-3 px-4">Submit</button>
