@@ -18,7 +18,7 @@ class CreateVendorsTable extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('mobile');
-            $table->string('reg_v_number');
+            $table->string('register_number');
             $table->string('firm_name');
             $table->string('gst_number');
             $table->string('alt_number');

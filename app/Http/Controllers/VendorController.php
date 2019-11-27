@@ -46,8 +46,7 @@ class VendorController extends Controller
             'email' => '',
             'mobile' => 'required|numeric|unique:vendors',
             'address' => 'required',
-            'alt_number' => 'numeric',
-            'reg_v_number' => 'required',
+            'register_number' => 'required|unique:vendors',
             'firm_name' => 'required',
             'gst_number' => 'required|unique:vendors'
         ]);
@@ -93,8 +92,7 @@ class VendorController extends Controller
             'email' => '',
             'mobile' => 'required|numeric',
             'address' => 'required',
-            'alt_number' => 'numeric',
-            'reg_v_number' => 'required',
+            'register_number' => 'required',
             'firm_name' => 'required',
             'gst_number' => 'required'
         ]);

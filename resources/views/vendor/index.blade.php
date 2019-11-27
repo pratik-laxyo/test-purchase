@@ -33,7 +33,7 @@
                 <td>{{ $row->firm_name }}</td>
                 <td>{{ $row->email }}</td>
                 <td>{{ $row->mobile }}</td>
-                <td>{{ $row->reg_v_number }}</td>
+                <td>{{ $row->register_number }}</td>
                 <td>{{ $row->gst_number }}</td>
                 <td>
                   <form action="{{ route('vendor.destroy',$row->id) }}" method="POST">

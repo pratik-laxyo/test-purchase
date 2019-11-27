@@ -24,8 +24,8 @@
                 <td>{{ $row->category->name }}</td>
                 <td>{{ $row->unit->name }}</td>               	
                 <td>
-                  @if(strlen($row->description) >= 200)
-                    {{ substr($row->description,0,200).'..... ' }} <b>Read More</b>
+                  @if(strlen($row->description) >= 80)
+                    {{ substr($row->description,0,80).'..... ' }} <b>Read More</b>
                   @else
                     {{ $row->description }}
                   @endif

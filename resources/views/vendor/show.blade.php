@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Registerd vendor no</label>
-                        <input class="form-control" value="{{ $vendor->reg_v_number }}" readonly="">
+                        <input class="form-control" value="{{ $vendor->register_number }}" readonly="">
                     </div>
                 </div>
                 <div class="row">
