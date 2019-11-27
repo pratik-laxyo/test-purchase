@@ -23,7 +23,7 @@ class ItemController extends Controller
       $category = item_category::get();     
       $department = Department::get();
       $items =item::with(['brand_name','department_name','category','unit'])->get(); 
-
+      
       return view('item.index',compact('items','category','department'));
     }
 

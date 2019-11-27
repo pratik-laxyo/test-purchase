@@ -19,7 +19,7 @@
         <div class="row">
           <div class="form-group col-md-2"></div>
           <div class="form-group col-md-3">
-              <select class="form-control" name="category">
+              <select class="form-control" name="category" id="category">
                 <option selected="" disabled="" value="0">Filter By Category</option>
                 @foreach($category as $cat)
                   <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -27,7 +27,7 @@
               </select>    
           </div>
           <div class="form-group col-md-3">
-              <select class="form-control" name="department">
+              <select class="form-control" name="department" id="department">
                 <option selected="" disabled="" value="0">Filter By Department</option>
                 @foreach($department as $dept)
                   <option value="{{ $dept->id }}">{{ $dept->name }}</option>
@@ -36,6 +36,7 @@
           </div>
           <div class="form-group col-md-4">
             <button type="submit" name="submit" id="addUnit" class="btn btn-primary">Filter</button>
+            <button type="button" name="reset" id="reset" class="btn btn-dark">Reset</button>
           </div>
         </div>
         </form>
@@ -64,5 +65,11 @@ $(document).ready(function() {
     });
   });
 });
+
+$(document).ready(function(){
+        $("#reset").click(function(){
+            location.reload(true);
+        });
+    });
 </script>
 @endsection
