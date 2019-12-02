@@ -54,6 +54,11 @@
       </div>
     </div>
   </li>
+	<li class="nav-item">
+    <a class="nav-link" href="{{ route('purchase.index') }}">
+      <i class="fas fa-fw fa-chart-area"></i>
+      <span>Purchase</span></a>
+  </li>
 
   <!-- Divider -->
   <hr class="sidebar-divider">
