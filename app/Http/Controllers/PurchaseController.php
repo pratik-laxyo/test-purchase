@@ -3,104 +3,97 @@
 namespace App\Http\Controllers;
 
 use App\Purchase;
+use App\Purchase_temperory;
+use App\Purchase_item;
+use App\purchase_invoice;
 use App\item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Helper;
+use Response;
 class PurchaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+		public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
     	$purchases = Purchase::with('item_name.unit')->get();
-    	return view('purchase.index',compact('purchases'));
+    	$temp = Purchase_temperory::latest()->first();
+    	return view('purchase.index',compact('purchases','temp'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    /* this function can be used to store item in session */
     public function store(Request $request)
-    {
-    		$validation = Validator::make($request->all(), [
-            'item_number' => 'unique:purchases'
-        ]);
-        if ($validation->fails())
-        {
-            return "Item already taken";
-        }
-        else
-        {
-            $data = new purchase;
-            $data->item_number = $request->input('item_number');
-            $data->save();
-            $purchases = Purchase::all();
-            return view('purchase.display_item',compact('purchases'));
-        }
+    {	
+    	$product = item::where("item_number", $request->item_number)->get();
+    	$id = $product[0]->id;
+      $cart = session()->get('cart');
+      if(!$cart) {
+        $cart = [
+        	$id => [
+	        	"item_number" => $product[0]->item_number,
+		        "name" => $product[0]->title,
+		        "quantity" => 1
+		      ]
+        ];
+        session()->put('cart', $cart);
+        return view('purchase.display_item');
+      }
+
+      if(isset($cart[$id])) {
+        $cart[$id]['quantity']++;
+        session()->put('cart', $cart);
+        return view('purchase.display_item');
+      }
+
+      $cart[$id] = [
+        "item_number" => $product[0]->item_number,
+		    "name" => $product[0]->title,
+		    "quantity" => 1
+      ];
+      session()->put('cart', $cart);
+      return view('purchase.display_item');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Purchase $purchase)
+    /* this function can be used to check id wise invoice */
+    public function show($id)
     {
-      	//
+    		//
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Purchase $purchase)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Purchase $purchase)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Purchase $purchase)
+    /* this function can be used to delete single item */
+    public function destroy(Request $request, $id)
     {
-        $purchase->delete();
-        return redirect()->route('purchase.index')->with('success','Item deleted successfully');
+    		if($id) {
+          $cart = session()->get('cart'); 
+          if(isset($cart[$id])) { 
+              unset($cart[$id]); 
+              session()->put('cart', $cart);
+          }
+          session()->flash('success', 'Product removed successfully');
+          return redirect()->route('purchase.index')->with('success','Item deleted successfully');
+        }
     }
 
+    /* this function can be used to search items */
     public function fetch(Request $request)
     {
     	if($request->get('query'))
@@ -124,10 +117,110 @@ class PurchaseController extends Controller
       }
     }
 
+    /* this function can be used to update quantity on input field */
     public function updateQty(Request $request)
     {
-    		$id = $request->id;
-        $quantity = $request->quantity;
-        purchase::where('id', $id)->update(['quantity'=>$quantity ]);
+  		$cart = session()->get('cart');
+  		$id = $request->id;
+    	$quantity = $request->quantity;
+    	if($quantity > 0){
+    		if(isset($cart[$id])) {
+	    		$cart[$id]['quantity'] = $quantity;
+	        session()->put('cart', $cart);
+	      }
+	    }
     }
+
+    /* this function can be used to store cart data on hold by clicking Hold btn */
+    public function holdStatus(Request $request)
+    {
+    		$cart = session()->get('cart');
+    		if(!empty($cart))
+    		{ 
+    			Helper::emptyCart('cart');
+    			$data = Purchase_temperory::all();
+    			if(count($data))
+    			{
+    				$persist = Purchase_temperory::latest()->first();
+	    			$persist->temp_data = json_encode($cart);
+	    			$persist->save();
+		    		return redirect()->route('purchase.index')->with('success','Your items are added on Hold.');
+    			}
+    			else
+    			{
+	    			$persist = new Purchase_temperory;
+	    			$persist->temp_data = json_encode($cart);
+	    			$persist->save();
+		    		return redirect()->route('purchase.index')->with('success','Your items are added on Hold.');
+		    	}
+	    	}
+	    	else
+	    	{
+	    		return redirect()->route('purchase.index')->with('alert','First select any items');
+	    	}
+    }
+
+    /* this function can be used to generate invoice by clicking generate btn */
+    public function invoice(Request $request)
+    {
+    	$cart = session()->get('cart');
+  		if(!empty($cart))
+  		{
+  			Helper::emptyCart('cart');
+  			$Purchase_item = Purchase_item::with('item_name.unit')->get();
+  			if(!empty($Purchase_item))
+  			{
+  				Purchase_item::query()->truncate();
+  			}
+  			$arr = array(
+  				//'invoice_no' => date("Ym").'/'.mt_rand(00000, 99999).'/'.count($cart),
+  				'invoice_no' => $this->generateInvoiceNumber(),
+  				'items' => json_encode($cart)
+  			);
+  			foreach ($cart as $value) {
+    			$data = array(
+    				'invoice_no' => $arr['invoice_no'],
+    				'item_number' => $value['item_number'], 
+    				'quantity' => $value['quantity'], 
+    			);
+    			Purchase::create($data);
+    		}
+    		Purchase_item::create($arr);
+    		purchase_invoice::create($arr);
+    		$purchases = Purchase_item::all();
+    		return view('purchase.invoice',compact('purchases'));
+    	}
+    	else
+    	{
+    		return redirect()->route('purchase.index')->with('alert','First select any items');
+    	}
+    }
+
+    /* this function can be used to restore hold cart data by clicking Restore cart item text */
+    public function cartRestore()
+    {
+    	$temp = Purchase_temperory::latest()->first();
+    	$id = $temp['id'];
+    	$temps = json_decode($temp['temp_data'], true);
+    	$cart = $temps;
+    	session()->put('cart', $cart);
+    	Purchase_temperory::find($id)->delete();
+    	return redirect()->route('purchase.index');
+    }
+
+    /* this function can be used to generate invoice number */
+    public function generateInvoiceNumber()
+   	{
+   			$getNum = purchase_invoice::latest()->first();
+   			if(!empty($getNum))
+   			{
+   				$num = $getNum->id+1;
+   			}
+   			else
+   			{
+   				$num = 0+1;
+   			}
+				$invoice_num = str_pad($num, 5, '0', STR_PAD_LEFT);
+				return date("Y-m-").$invoice_num;
+   	}
 }

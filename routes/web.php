@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('vendor', 'VendorController');
 Route::resource('/um', 'UnitofmeasurementController');
 Route::resource('/category', 'ItemCategoryController');
+Route::resource('/item_purchase_history', 'ItemPurchaseHistoryController');
 Route::resource('/location', 'LocationController');
 Route::resource('item', 'ItemController');
 Route::resource('purchase', 'PurchaseController');
@@ -30,7 +31,12 @@ Route::resource('/department', 'DepartmentController');
 Route::resource('/brand', 'BrandController');
 Route::post('/purchase/fetch', 'PurchaseController@fetch')->name('fetch');
 Route::post('/purchase/updateQty', 'PurchaseController@updateQty')->name('updateQty');
-//Route::get('/displayItems', 'PurchaseController@displayItems')->name('displayItems');
+Route::get('/holdStatus', 'PurchaseController@holdStatus')->name('holdStatus');
+Route::get('invoice', 'PurchaseController@invoice')->name('invoice');
+Route::get('cartRestore', 'PurchaseController@cartRestore')->name('cartRestore');
+Route::get('generateInvoiceNumber', 'PurchaseController@generateInvoiceNumber')->name('generateInvoiceNumber');
+Route::get('/unique_invoice/{id}/', 'ItemPurchaseHistoryController@show')->name('show');
+
 
 /*$cat_id = 01;
 $unit_id = 02;

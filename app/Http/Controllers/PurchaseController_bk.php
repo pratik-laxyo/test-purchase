@@ -38,8 +38,7 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-    		//return $request->final;
-        $validation = Validator::make($request->all(), [
+    		$validation = Validator::make($request->all(), [
             'item_number' => 'unique:purchases'
         ]);
         if ($validation->fails())
@@ -123,5 +122,12 @@ class PurchaseController extends Controller
 	      $output .= '</ul>';
 	      echo $output;
       }
+    }
+
+    public function updateQty(Request $request)
+    {
+    		$id = $request->id;
+        $quantity = $request->quantity;
+        purchase::where('id', $id)->update(['quantity'=>$quantity ]);
     }
 }

@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase extends Model
+class Purchase_item extends Model
 {
     protected $fillable = [
-        'invoice_no', 'item_number', 'quantity'
+        'invoice_no', 'items'
     ];
 
     public function item_name(){

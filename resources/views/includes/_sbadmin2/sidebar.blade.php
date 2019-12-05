@@ -59,6 +59,11 @@
       <i class="fas fa-fw fa-chart-area"></i>
       <span>Purchase</span></a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ '/item_purchase_history' }}">
+      <i class="fa fa-history" aria-hidden="true"></i>
+      <span>Purchase History</span></a>
+  </li>
 
   <!-- Divider -->
   <hr class="sidebar-divider">

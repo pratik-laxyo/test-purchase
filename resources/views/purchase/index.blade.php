@@ -5,14 +5,23 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 <style type="text/css">
 	#itemList > ul{
-		    padding: 5px 10px;
+    position: absolute !important;
+    margin-top: -15px;
+    width: 96%;
+    background: #eeeff5;
+    margin-left: 10px;
 	}
 	#itemList > ul > li{
-		    border-bottom: 1px solid #d4d2e4;
-		    padding: 3px 0;
+    border-bottom: 1px solid #d4d2e4;
+    padding: 5px 10px;
 	}
-	.highlight{
-		background-color: #ccc;
+	.blink_me {
+	  animation: blinker 2s linear infinite;
+	}
+	@keyframes blinker {
+	  50% {
+	    opacity: 0;
+	  }
 	}
 </style>
 <div class="container-fluid">
@@ -22,6 +31,11 @@
     <div class="card-body">
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
+        @if ($message = Session::get('alert'))
+            <div class="alert alert-danger">
                 <p>{{ $message }}</p>
             </div>
         @endif
@@ -35,11 +49,22 @@
 	        	</div>
 	        	@csrf
 	        </div>
-	        <div class="col-md-3"></div>
+	        <div class="col-md-3">
+	        	@if(!empty($temp))
+	        	<a href="{{ route('cartRestore') }}"><div class="blink_me float-right" style="color: blue">Restore cart items</div></a>
+						@endif
+	        </div>
 	      </div>
 	    	</form>
+	    	<div class="row">
+	    		<div class="col-md-12">
+	    			<div class="float-right p-2">
+	    				<a class="btn btn-warning" href="{{ route('holdStatus') }}"><i class="fa fa-hourglass-half" aria-hidden="true"></i>  Hold </a>
+	      		</div>
+	      	</div>
+	    	</div>
 	      <div class="row">
-					<div class="col-md-12">
+	      	<div class="col-md-12">
 							<table class="table table-border" width="100%" id="userTable">
 								<thead>
 									<tr>
@@ -49,18 +74,28 @@
 										<th>Action</th>
 									</tr>
 								</thead>
-								<tbody id="purchBody">
+  							<tbody id="purchBody">
 									@include('purchase.display_item')
 								</tbody>
 							</table>
 					</div>
         </div>
+        <div class="row">
+	    		<div class="col-md-5"></div>
+	    		<div class="col-md-2">
+	    			<div class="p-2">
+		      		<a class="btn btn-success" href="{{ route('invoice') }}"><i class="fa fa-print" aria-hidden="true"></i> Generate</a>
+	      		</div>
+	      	</div>
+	      	<div class="col-md-5"></div>
+	    	</div>
 	  </div>
 	</div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- search and store data in session -->
 <script>
 $(document).ready(function(){
  	$('#searchItem').keyup(function(){ 
@@ -98,23 +133,19 @@ $(document).ready(function(){
         method:"POST",
         data:{item_number:final, _token:_token},
         success:function(data){
-        	if(data != 'Item already taken')
-        	{
-         		$('#searchItem').val('');
-			    	$('#purchBody').empty().html(data);
-			    }
-			    else
-			    {
-			    	$('#searchItem').val('');
-			    	alert(data);
-			    }
+        	$('#searchItem').val('');
+			    $('#purchBody').empty().html(data);
+			    $('.load-cls').hide();
         }
       });
     }
   });  
 });
 </script>
+<!-- end -->
+<!-- update quantity from input field -->
 <script>
+$('.load-cls').hide();
 function myFunction(id) {
 	var qty = $('#chngQty'+id).val();
 	var _token = $('input[name="_token"]').val();
@@ -123,10 +154,25 @@ function myFunction(id) {
     method:"POST",
     data:{quantity:qty, id:id, _token:_token},
     success:function(data){
-    	
+    	setTimeout(function(){
+    		$('#loading'+id).show();
+    	}, 1000);
+    	setTimeout(function(){
+		  	$('#loading'+id).hide();
+		  }, 3000);
     }
   });
-	//alert(str);
 }
 </script>
+<!-- end -->
+<!-- Hold Button -->
+{{-- <script type="text/javascript">
+function holdStatus() {
+	var btn = document.getElementById('btn');
+	btn.disabled = true;
+	var ses = "";
+	alert(ses);
+}
+</script> --}}
+<!-- end -->
 @endsection
